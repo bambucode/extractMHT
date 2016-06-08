@@ -1,9 +1,8 @@
 # extractMHT
 
-Improved extractMHT AutoIt script for extracting files from a MHT file. Based on the work of Jared Ireland (http://www.legroom.net/software/extractmht)
+This utility allows for extraction of HTML, CSS, JS files from a [MHTML file](https://es.wikipedia.org/wiki/MHTML). Based on the extractMHT AutoIt script of Jared Breland (http://www.legroom.net/software/extractmht).
 
 Requires:
-
 * AutoIt (https://www.autoitscript.com/)
 
 ## Changelog:
@@ -14,3 +13,9 @@ Requires:
 1.0 (09/01/2006) (Original file)
 
   Initial release
+
+### Keywords
+* Mht2htm
+* Extract MHT
+* MHT unpack
+* MHTML decompress

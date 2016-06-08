@@ -1,13 +1,38 @@
+#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Icon=support\Icons\extractmht_exe.ico
+#AutoIt3Wrapper_Outfile=extractMHT32.exe
+#AutoIt3Wrapper_Outfile_x64=extractMHT64.exe
+#AutoIt3Wrapper_Compile_Both=y
+#AutoIt3Wrapper_UseX64=y
+#AutoIt3Wrapper_Res_Comment=Compiled with AutoIt http://www.autoitscript.com/
+#AutoIt3Wrapper_Res_Description=extractMHT
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.0
+#AutoIt3Wrapper_Res_LegalCopyright=GNU General Public License
+#AutoIt3Wrapper_Run_AU3Check=n
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
+#Region converted Directives from C:\Delphi\extractMHT\extractMHT.au3.ini
+#AutoIt3Wrapper_Allow_Decompile=4
+#EndRegion converted Directives from C:\Delphi\extractMHT\extractMHT.au3.ini
+;
+; *** Start added by AutoIt3Wrapper ***
+#include <GUIConstantsEx.au3>
+#include <WindowsConstants.au3>
+; *** End added by AutoIt3Wrapper ***
+#Region converted Directives from C:\Users\soporte\Desktop\htmltools\extractMHT.au3.ini
+#AutoIt3Wrapper_Allow_Decompile=4
+#EndRegion converted Directives from C:\Users\soporte\Desktop\htmltools\extractMHT.au3.ini
+;
 ; ----------------------------------------------------------------------------
 ;
-; extractMHT v1.0
+; extractMHT v1.1
 ; Author:	Jared Breland <jbreland@legroom.net>
+; Author:	Luis Carrasco <luis@bambucode.com>
 ; Homepage:	http://www.legroom.net/mysoft
-; Language:	AutoIt v3.2.0.1
+; Language:	AutoIt v3.3.14.2
 ; License:	GNU General Public License (http://www.gnu.org/copyleft/gpl.html)
 ;
 ; Script Function:
-;	Extract files from MHT harchives
+;	Extract files from MHT archives
 ;
 ; ----------------------------------------------------------------------------
 
@@ -18,7 +43,7 @@
 opt("ExpandVarStrings", 1)
 opt("GUIOnEventMode", 1)
 global $name = "extractMHT"
-global $version = "1.0"
+global $version = "1.1"
 global $title = "$name$ v$version$"
 global $prompt = false
 global $mht, $outdir, $filedir, $filename, $boundary, $firstpart, $infile
@@ -214,19 +239,21 @@ func getFName($url, $type)
 	; If no filename specified, generate based on content-type
 	if stringright($url, 1) == "/" then
 		return unique("index", $ext)
-
 	; Otherwise take directlry from URL
 	else
+		; Remove everything before the /
 		$temp = stringtrimleft($url, stringinstr($url, '/', 0, -1))
-		$temp = stringregexp($temp, "(.*?\.\a*)", 1)
+		; Split the filename and extension in an array using Regex
+		$temp = StringRegExp($temp, "([^\\]*)\.(\w+)$", 1)
 		if NOT @error AND @extended then
-			$fname = stringleft($temp[0], stringinstr($temp[0], '.', 0, -1)-1)
-			$fext = stringtrimleft($temp[0], stringinstr($temp[0], '.', 0, -1))
+			$fname = $temp[0]
+			$fext = $temp[1]
 			return unique($fname, $fext)
 		else
 			return unique("unknown", $ext)
 		endif
 	endif
+
 endfunc
 
 ; Ensure a unique filename is returned
